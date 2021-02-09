@@ -5,71 +5,186 @@ var generateBtn = document.querySelector("#generate");
 
 function writePassword() {
 
-  var passwordCriteria = "Password Length will be ";
+  var criteriaCount = 0;
 
-  var PasswordLength = prompt("Enter the Length of Password");
-  passwordCriteria = passwordCriteria + PasswordLength;
+  var upperCasecharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-  if(PasswordLength < 8 || PasswordLength > 128){
-    alert("The password length should be between 8 to 128 characters");
-    return;
+  var lowerCasecharacters = 'abcdefghijklmnopqrstuvwxyz';
+
+  var numericCharacters = '0123456789';
+
+  var specialCharacters = "~`!#$%^&*+=-[]\\\';,/{}|\":<>?";
+  var passwordText = document.querySelector("#password");
+
+ 
+
+  var passwordGenerated = '';
+
+ 
+
+var PasswordLength = prompt("Enter the Length of Password");
+
+ 
+
+  if(PasswordLength < 8 || PasswordLength > 128 ){
+
+                  alert('Password Length should be more than 8 and less than 128');
+                  passwordText.value = "Your Secure Password";
+                  return;
+
   }
-  var LowercaseNeeded = confirm("Do you want lowercase in password!");
-  
+
+ 
+
+var LowercaseNeeded = confirm("Do you want lowercase in password!");
+
+  if(LowercaseNeeded)criteriaCount++;
+
+
+
+  var UppercaseNeeded = confirm("Do you want uppercase in password!");
+
+  if(UppercaseNeeded) criteriaCount++;
+
+
+
+  var numericNeeded = confirm("Do you want numeric in password");
+
+  if(numericNeeded) criteriaCount ++;
+
+
+
+  var specialCharacterNeeded = confirm("Do you want special Character in password");
+
+  if(specialCharacterNeeded) criteriaCount++;
+
+ 
+
+  if(criteriaCount === 0){
+
+                  alert("You must select at least one criteria. Try again!");
+                  passwordText.value = "Your Secure Password";
+                  return;
+
+  }
+
+                 
+
+ 
+
+  // Calculate the distribution.
+
+  var remainingCount = PasswordLength % criteriaCount;
+
+  var characterShare = (PasswordLength - remainingCount)/criteriaCount;
+
+ 
+
   if(LowercaseNeeded){
-    passwordCriteria = passwordCriteria + " will contain lowercase ";
+
+                  for (var i = 0 ; i < characterShare; i++){
+
+                                  passwordGenerated = passwordGenerated + lowerCasecharacters.charAt(Math.floor(Math.random() * characterShare));
+
+                  }
+
+                  criteriaCount = criteriaCount - 1;
+
+                  if(criteriaCount == 0 ){
+
+                                  for(var i = 0 ; i < remainingCount ; i++){
+
+                                  passwordGenerated = passwordGenerated + lowerCasecharacters.charAt(Math.floor(Math.random() * remainingCount));
+
+                                  }
+
+                  }
+
+                 
+
   }
-   else{
-    passwordCriteria = passwordCriteria + " will not contain lowecase ";
-   }
-   alert(passwordCriteria);
 
-   var UppercaseNeeded = confirm("Do you want uppercase in password!");
-   
-   if(UppercaseNeeded){
-    
-    passwordCriteria = passwordCriteria + " and contain uppercase"
+ 
+
+  if(UppercaseNeeded){
+
+                  for (var i = 0 ; i < characterShare; i++){
+
+                                  passwordGenerated = passwordGenerated + upperCasecharacters.charAt(Math.floor(Math.random() * characterShare));
+
+                  }
+
+                  criteriaCount = criteriaCount - 1;
+
+                  if(criteriaCount == 0 ){
+
+                                  for(var i = 0 ; i < remainingCount ; i++){
+
+                                  passwordGenerated = passwordGenerated + upperCasecharacters.charAt(Math.floor(Math.random() * remainingCount));
+
+                                  }
+
+                  }                                                             
+
   }
-   else{
-    passwordCriteria = passwordCriteria + " and not contain uppercase"
-   }
-   alert(passwordCriteria);
 
-   var numericNeeded = confirm("Do you want numeric in password");
+ 
 
-   if(numericNeeded){
-    passwordCriteria = passwordCriteria + " will contain numeric value for eg: 1,2,3 etc";
-   }
-   else{
-    passwordCriteria = passwordCriteria + " will not contain  numeric value "; 
-   }
-   alert(passwordCriteria);
+  if(numericNeeded){
 
-   var specialCharacter = confirm("Do you want specialCharacte in password");
+                  for (var i = 0 ; i < characterShare; i++){
 
-   if(specialCharacter){
-    passwordCriteria = passwordCriteria + " will contain specialCharacter for eg: #,&,* etc";
-   }
-   else{
-    passwordCriteria = passwordCriteria + " will not contain  specialCharacte value "; 
-   }
-   alert(passwordCriteria);
+                                  passwordGenerated = passwordGenerated + numericCharacters.charAt(Math.floor(Math.random() * characterShare));
 
-   if(!LowercaseNeeded && !UppercaseNeeded && !numericNeeded && !specialCharacter){
-     alert("you must select atleast one criteria try again!" );
-   }
-   
-   var password = generatePassword();
-   var passwordText = document.querySelector("#password");
-   
-   passwordText.value = password;
-   return;
+                  }
 
-}
-function generatePassword(){
+                  criteriaCount = criteriaCount - 1;
+
+                  if(criteriaCount == 0 ){
+
+                                  for(var i = 0 ; i < remainingCount ; i++){
+
+                                  passwordGenerated = passwordGenerated + numericCharacters.charAt(Math.floor(Math.random() * remainingCount));
+
+                                  }
+
+                  }                                                             
+
+  }
+
+ 
+
+  if(specialCharacterNeeded){
+
+                  for (var i = 0 ; i < characterShare; i++){
+
+                                  passwordGenerated = passwordGenerated + specialCharacters.charAt(Math.floor(Math.random() * characterShare));
+
+                  }
+
+                  criteriaCount = criteriaCount - 1;
+
+                  if(criteriaCount == 0 ){
+
+                                  for(var i = 0 ; i < remainingCount ; i++){
+
+                                  passwordGenerated = passwordGenerated + specialCharacters.charAt(Math.floor(Math.random() * remainingCount));
+
+                                  }
+
+                  }                                                             
+
+  }
+
+  alert('The password is : ' + passwordGenerated);
+
   
-  return "Pwd";
+
+  passwordText.value = passwordGenerated;
+
 }
+
+
 
 
 
